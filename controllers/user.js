@@ -1,0 +1,106 @@
+const User = require("../models/User");
+const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
+var jwt = require("jsonwebtoken");
+var expressJwt = require("express-jwt");
+const { body } = require("express-validator");
+const Token = require("../models/Token");
+const urll = "http://localhost:5000/api";
+var aes256 = require('aes256');
+const resetToken = require("../models/resetToken");
+
+const sendEmail = require("../controllers/sendEmail");
+const resetPassword = require("../controllers/resetPassword");
+const { url } = require("inspector");
+const Joi = require("joi");
+//signup
+exports.signup=async(req , res)=>{
+try{
+    let user = await User.findOne(
+        ({firstName, lastName, email, password}=req.body)
+    );
+    if(user)
+    return res
+    .status(409)
+    .send({message:"user with given email already exist"});
+    user = new User({...req.body});
+    user.setPassword(req.body.password);
+    await user.save();
+    const token = await new Token({
+        userId: user._id,
+        token: crypto.randomBytes(32).toString("hex"),
+    }).save();
+    const url =`${urll}/${user._id}/verify/${token.token}`;
+    await sendEmail(user.email, "Verify Email", url);
+    res
+      .status(201)
+      .send({ message: "An Email sent to your account please verify" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+};
+//verify with link 
+exports.Token = async (req, res) => {
+    // Find a matching token
+    Token.findOne({ token: req.params.token }, function (err, token) {
+      if (!token)
+        return res.status(400).send({
+          type: "not-verified",
+          msg: `We were unable to find a valid token.Your token my have expired.`,
+        });
+  
+      // If we found a token, find a matching user
+      User.findOne({ _id: token.userId }, function (err, user) {
+        if (!user)
+          return res
+            .status(400)
+            .send({ msg: "We were unable to find a user for this token." });
+        if (user.verified)
+          return res.status(400).send({
+            type: "already-verified",
+            msg: "This user has already been verified.",
+          });
+  
+        // Verify and save the user
+        user.verified = true;
+        user.save(function (err) {
+          if (err) {
+            return res.status(500).send({ msg: err.message });
+          }
+          res.status(200).send("The account has been verified. Please login.");
+        });
+      });
+    });
+  };
+  //signin
+  exports.signin = (req, res) => {
+    User.findOne({ email: req.body.email }, function (err, user) {
+      if (user === null) {
+        return res.status(400).send({
+          message: "User not found.",
+        });
+      } else {
+        if (user.validPassword(req.body.password) && user.verified == true) {
+          return res.json({
+            token: jwt.sign(
+              { email: user.email, firstName: user.firstName, _id: user._id },
+              "RESTFULAPIs"
+            ),
+            user,
+          });
+        } else if (
+          user.validPassword(req.body.password) &&
+          user.verified == false
+        ) {
+          return res.status(400).send({
+            message: "user not verified",
+          });
+        } else {
+          return res.status(400).send({
+            message: "Wrong Password or user not verified",
+          });
+        }
+      }
+    });
+  };

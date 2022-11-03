@@ -18,13 +18,20 @@
   },
   "homepage": "https://github.com/fedinaimi/mini-projet#readme",
   "dependencies": {
+    "aes256": "^1.1.0",
+    "bcryptjs": "^2.4.3",
     "body": "^5.1.0",
     "body-parser": "^1.20.1",
     "cookie-parser": "^1.4.6",
     "crypto": "^1.0.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "express-jwt": "^7.7.7",
+    "express-validator": "^6.14.2",
     "joi": "^17.7.0",
-    "mongoose": "^6.7.1"
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.7.1",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.8.0"
   }
 }
