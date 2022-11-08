@@ -104,3 +104,81 @@ exports.Token = async (req, res) => {
       }
     });
   };
+  //------------------------------forgot password------------------//
+exports.forgotPassword = async (req, res) => {
+  try {
+    let user = await User.findOne({ email: req.body.email });
+    if (!user)
+      return res
+        .status(409)
+        .send({ message: "User with given email not Exist!" });
+
+    /*const salt = await bcrypt.genSalt(Number(process.env.SALT));
+    const hashPassword = await bcrypt.hash(req.body.password, salt);*/
+    const token = await new resetToken({
+      userId: user._id,
+      token: crypto.randomBytes(32).toString("hex"),
+    }).save();
+
+    const url = `${urll}/${user._id}/reset-password/${token.token}`;
+    await resetPassword(user.email, "reset Password Email", url);
+    res
+      .status(201)
+      .send({ message: "An Email sent to your account please verify" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+};
+//--------------------------reset password-----------------------//
+exports.resetPassword = async (req, res) => {
+  resetToken.findOne({ token: req.params.token }, function (err, token) {
+    if (!token)
+      return res.status(400).send({
+        type: "not-exist",
+        msg: `We were unable to find a valid token.Your token my have expired.`,
+      });
+
+    // If we found a token, find a matching user
+    User.findOne({ _id: token.userId }, function (err, user) {
+      if (!user)
+        return res
+          .status(400)
+          .send({ msg: "We were unable to find a user for this token." });
+
+      // Verify and save the user
+      user.password = req.body.password;
+      user.setPassword(req.body.password);
+
+      user.save(function (err) {
+        if (err) {
+          return res.status(500).send({ msg: err.message });
+        }
+        res.status(200).send("The password has been changed. Please login.");
+      });
+    });
+  });
+};
+//--------------------------signout---------------------------//
+exports.signout = (req, res) => {
+  res.clearCookie("token");
+  return res.json({
+    message: "user signout",
+  });
+};
+//-------------------------makeAdmin---------------------------//
+
+exports.makeAdmin = (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.params.id },
+    { $set: { userType: "Admin"} },
+    { new: true, upsert: false }
+  )
+    .then((users) => {
+      res.status(200).json({ users , message: "changed !"});
+      console.log(user.userType)
+    })
+    .catch((error) => {
+      res.satus(400).json({ error, message: "faild" } );
+    });
+};
