@@ -11,6 +11,10 @@ const port = process.env.PORT ||5000 ;
 const userRoutes = require("./routes/user");
 const adminRoutes = require("./routes/admin");
 const clientRoutes = require("./routes/client");
+const categrorieRoutes = require("./routes/categorie")
+const produitRoutes = require("./routes/produit")
+
+
 
 
 
@@ -49,5 +53,7 @@ app.use(cookieParser());
 app.use("/api", userRoutes);
 app.use("/admin", adminRoutes);
 app.use("/client",clientRoutes);
+app.use("/categorie",categrorieRoutes);
+app.use("/produit",produitRoutes);
 
 
