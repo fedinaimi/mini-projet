@@ -13,6 +13,7 @@ const sendEmail = require("../controllers/sendEmail");
 const resetPassword = require("../controllers/resetPassword");
 const { url } = require("inspector");
 const Joi = require("joi");
+const Admin = require("../models/admin");
 //signup
 exports.signup=async(req , res)=>{
 try{
@@ -81,7 +82,7 @@ exports.Token = async (req, res) => {
           message: "User not found.",
         });
       } else {
-        if (user.validPassword(req.body.password) && user.verified == true) {
+        if (user.validPassword(req.body.password) && user.verified == true || Admin.verified == true) {
           return res.json({
             token: jwt.sign(
               { email: user.email, firstName: user.firstName, _id: user._id },

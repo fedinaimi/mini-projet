@@ -3,28 +3,30 @@ const toAdmin = require("./user")
 const User =require("../models/User")
 
 
-exports.addAdmin = (req, res) => {
-  newAdmin.save()
-    .then(() => {
-      toAdmin.makeAdmin()
-      (res.status(200).json({ message: "admin crated !" }))})
+exports.addAdmin = async (req, res) => {
+  
+  try {
+    let Newadmin = await Admin.findOne(
+      ({ firstName, lastName, email, password } = req.body)
+    );
+    if (Newadmin)
+      return res
+        .status(409)
+        .send({ message: "admin with given email already Exist!" });
 
-    .catch((error) => res.status(400).json({ error }))
+    /*const salt = await bcrypt.genSalt(Number(process.env.SALT));
+    const hashPassword = await bcrypt.hash(req.body.password, salt);*/
+
+    Newadmin = new Admin({ ...req.body });
+    Newadmin.setPassword (req.body.password);  
+
+    await Newadmin.save();
+  
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: "Internal Server Error" });
   }
-
-    /*
-
-  let newAdmin = new Admin({
-    ...req.body,
-  });
-
-  newAdmin.save()
-
-    .then((admin) => {
-      toAdmin.makeAdmin()
-      res.status(201).json( admin ,{ message: "Admin created" })})
-    .catch((error) => res.status(400).json({ error, message :"faild ..."}));
-    */
+};
 
 
 exports.getAllAdmins = (req, res) => {

@@ -10,6 +10,7 @@ const port = process.env.PORT ||5000 ;
 //import route
 const userRoutes = require("./routes/user");
 const adminRoutes = require("./routes/admin");
+const clientRoutes = require("./routes/client");
 
 
 
@@ -47,4 +48,6 @@ app.use(cookieParser());
 
 app.use("/api", userRoutes);
 app.use("/admin", adminRoutes);
+app.use("/client",clientRoutes);
+
 
