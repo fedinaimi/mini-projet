@@ -13,6 +13,7 @@ const adminRoutes = require("./routes/admin");
 const clientRoutes = require("./routes/client");
 const categrorieRoutes = require("./routes/categorie")
 const produitRoutes = require("./routes/produit")
+const panierRoutes = require("./routes/panier")
 
 
 
@@ -55,5 +56,6 @@ app.use("/admin", adminRoutes);
 app.use("/client",clientRoutes);
 app.use("/categorie",categrorieRoutes);
 app.use("/produit",produitRoutes);
+app.use("/panier",panierRoutes);
 
 

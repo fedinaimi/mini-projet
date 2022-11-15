@@ -1,5 +1,6 @@
 const { number } = require("joi");
 const mongoose = require("mongoose");
+const produit = require("./produit");
 
 const panierSchema = new mongoose.Schema({
  
@@ -18,9 +19,22 @@ const panierSchema = new mongoose.Schema({
  },
  totale:{
     type: mongoose.Types.Decimal128,
+    default : 0,
     required : true ,
- }
+ },
+ client: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "client",
+    required: false,
+  },
+
+
   
 });
+
+
+
+    
+    
 
 module.exports = mongoose.model("panier", panierSchema);

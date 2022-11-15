@@ -1,14 +1,14 @@
-const produit = require("../models/produit");
+const panier = require("../models/panier");
 
 //--------------------------ajouter une categorie ---------------------------//
-exports.addproduit = (req, res) => {
+exports.addpanier= (req, res) => {
     
-    let newproduit = new produit({...req.body});
+    let newpanier = new panier({...req.body});
     
     // Initialize newUser object with request data
 
     
-      newproduit.save((err, newproduit) => {
+    newpanier.save((err, newpanier) => {
         if (err) {
             
           return res.status(400).json({
@@ -17,7 +17,7 @@ exports.addproduit = (req, res) => {
         }
         return res.json({
           message: "sucsess",
-          newproduit,
+          newpanier,
         });
       });
   };
