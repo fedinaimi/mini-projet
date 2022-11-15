@@ -5,26 +5,20 @@ const bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 require("dotenv").config();
 
-const port = process.env.PORT ||5000 ;
+const port = process.env.PORT || 5000;
 
 //import route
 const userRoutes = require("./routes/user");
 const adminRoutes = require("./routes/admin");
 const clientRoutes = require("./routes/client");
-const categrorieRoutes = require("./routes/categorie")
-const produitRoutes = require("./routes/produit")
-const panierRoutes = require("./routes/panier")
-
-
-
-
-
+const categrorieRoutes = require("./routes/categorie");
+const produitRoutes = require("./routes/produit");
+const commandeRoutes = require("./routes/commande");
+const panierRoutes = require("./routes/panier");
 const app = express();
 
 mongoose
-  .connect(
-    "mongodb://127.0.0.1:27017/Frippy"
-  )
+  .connect("mongodb://127.0.0.1:27017/Frippy")
   .then(() => {
     console.log("Database connected!");
     // Starting a server
@@ -53,9 +47,8 @@ app.use(cookieParser());
 
 app.use("/api", userRoutes);
 app.use("/admin", adminRoutes);
-app.use("/client",clientRoutes);
-app.use("/categorie",categrorieRoutes);
-app.use("/produit",produitRoutes);
-app.use("/panier",panierRoutes);
-
-
+app.use("/client", clientRoutes);
+app.use("/categorie", categrorieRoutes);
+app.use("/produit", produitRoutes);
+app.use("/commande", commandeRoutes);
+app.use("/panier", panierRoutes);
