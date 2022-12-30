@@ -5,7 +5,7 @@ var jwt = require("jsonwebtoken");
 var expressJwt = require("express-jwt");
 const { body } = require("express-validator");
 const Token = require("../models/Token");
-const urll = "http://localhost:5000/api";
+const urll = "http://172.16.2.67:5000/api";
 var aes256 = require('aes256');
 const resetToken = require("../models/resetToken");
 
@@ -13,7 +13,8 @@ const sendEmail = require("../controllers/sendEmail");
 const resetPassword = require("../controllers/resetPassword");
 const { url } = require("inspector");
 const Joi = require("joi");
-const Admin = require("../models/admin");
+
+const router = require("../routes/user");
 //signup
 exports.signup=async(req , res)=>{
 try{
@@ -183,3 +184,34 @@ exports.makeAdmin = (req, res) => {
       res.satus(400).json({ error, message: "faild" } );
     });
 };
+exports.profile = async (req,res)=>{
+  try{
+    const user = await User.findById({_id:req.params.id});
+    if(!user){
+      return res.json({message:'No user found'})
+    }
+    res.json(user)
+  }catch(error){
+    res.status(500).json(error)
+  }
+}
+exports.getUsers=async (req,res)=>{
+  try {const user = await User.find()
+  res.json(user)
+
+} catch (error) {
+res.status(500).json(error)}
+}
+
+
+
+/*exports.getUsers=async (req,res)=>{
+  try {
+    const user  = await User.findOne({ _id: req.params.id });
+    if(!user){
+        return res.json({message:'No user found'})
+    }
+    return res.json({user:user})
+} catch (error) {
+    return res.json({ error: error });  
+}}*/

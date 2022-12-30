@@ -30,11 +30,14 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    Image:{
-       type:String,
-       
 
-    },
+   
+    adresse:{
+     type:String},
+
+     mobilenumber:{
+       type:String,},
+       
     hash: String,
     salt: String,
   },

@@ -19,11 +19,10 @@ profile,
 
 router.post("/signup", userController.signup);
 router.post("/signin", userController.signin);
-//router.post("/profile");
+router.get("/profile/:id",userController.profile);
 router.get("/signout", userController.signout);
-//router.get("/", auth, userController.getUsers);
+router.get("/user",userController.getUsers);
 router.get("/:id/verify/:token", Token);
 router.post('/forgot-password',forgotPassword);
 router.post('/:id/reset-password/:token',resetPassword);
-//router.put("/updateProfile/:id", updateProfile);
 module.exports = router ;
