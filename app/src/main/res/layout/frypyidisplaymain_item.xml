@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="5dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:elevation="10dp"
+    android:orientation="vertical"
+    android:padding="10dp"
+    app:layout_constraintDimensionRatio="2:1">
+
+
+    <ImageView
+        android:id="@+id/ivShoeDisplayItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/backgrounds_shapes"
+        android:padding="10dp"
+        android:src="@drawable/logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@id/guideline2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvNameShoeDisplayItem"
+        style="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Boutique Name"
+        app:layout_constraintStart_toStartOf="@id/ivShoeDisplayItem"
+        app:layout_constraintTop_toBottomOf="@id/ivShoeDisplayItem"
+        />
+
+
+    <TextView
+        android:id="@+id/tvPriceShoeDisplayItem"
+        style="@style/TextAppearance.MaterialComponents.Subtitle2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/tvNameShoeDisplayItem"
+        app:layout_constraintTop_toBottomOf="@id/tvNameShoeDisplayItem"
+        android:text="adress" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="402dp" />
+
+    <ToggleButton
+        android:id="@+id/btnLike"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:minHeight="48dp"
+        android:minWidth="48dp"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textOn=""
+        android:textOff=""
+        android:background="@drawable/ic_heart_svgrepo_com"
+        android:backgroundTint="@color/white"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        app:tint="@color/white" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

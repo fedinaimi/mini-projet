@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="5dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:elevation="10dp"
+    android:orientation="vertical"
+    android:padding="10dp"
+    app:layout_constraintDimensionRatio="2:1">
+
+
+    <ImageView
+        android:id="@+id/boutiqueDisplayItem"
+        android:layout_width="319dp"
+        android:layout_height="356dp"
+        android:background="@drawable/backgrounborder"
+        android:padding="10dp"
+        android:src="@drawable/slider"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/produitname"
+        style="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="produit Name"
+        app:layout_constraintStart_toStartOf="@id/boutiqueDisplayItem"
+        app:layout_constraintTop_toBottomOf="@id/boutiqueDisplayItem"
+        />
+
+
+    <TextView
+        android:id="@+id/adresboutiqueDisplayItem"
+        style="@style/TextAppearance.MaterialComponents.Subtitle2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/produitname"
+        app:layout_constraintTop_toBottomOf="@id/produitname"
+        android:text="prix" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="1" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

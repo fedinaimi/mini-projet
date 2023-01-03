@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="MissingClass">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/detailToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/detailActualToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+            app:title="Details Boutique"
+            />
+
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <ImageView
+        android:id="@+id/ivDetails"
+        android:layout_width="118dp"
+        android:layout_height="124dp"
+        android:padding="20dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_baseline_storefront_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.097" />
+
+    <TextView
+        android:id="@+id/boutiquenom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="nom"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/ivDetails"
+        app:layout_constraintTop_toBottomOf="@+id/detailToolbar" />
+
+
+    <TextView
+        android:id="@+id/telfP"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="92dp"
+        android:text="+216 50556323"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/boutiquenom" />
+
+    <TextView
+        android:id="@+id/boutiqueadress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="adress"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/ivDetails"
+        app:layout_constraintTop_toBottomOf="@+id/detailToolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="132dp"
+        app:layout_constraintEnd_toEndOf="@id/detailToolbar"
+        app:layout_constraintHorizontal_bias="0.0"
+
+        app:layout_constraintStart_toStartOf="@id/detailToolbar"
+        app:layout_constraintTop_toBottomOf="@id/detailToolbar"
+        tools:ignore="SpeakableTextPresentCheck">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/boutiqueproduitList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/llTextGroup"
+            app:layout_constraintStart_toStartOf="@id/llTextGroup"
+            app:layout_constraintTop_toBottomOf="@id/llTextGroup"
+            app:layout_constraintVertical_bias="1.0"
+            tools:listitem="@layout/frypiproduit_item" />
+    </ScrollView>
+
+    <Button
+        android:id="@+id/buttonProduit"
+        android:layout_width="170dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="92dp"
+        android:text="add produit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/boutiqueadress" />
+
+    <Button
+        android:id="@+id/buttonchat"
+        android:layout_width="43dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="28dp"
+
+        android:background="@drawable/ic_baseline_mark_unread_chat_alt_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/telfP" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
