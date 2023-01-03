@@ -25,7 +25,7 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(morgan('dev'));
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/Frippy")
+  .connect("mongodb+srv://ashraf:ashraf123@cluster0.lius4xw.mongodb.net/?retryWrites=true&w=majority")
   .then(() => {
     console.log("Database connected!");
     // Starting a server
