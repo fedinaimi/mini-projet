@@ -5,7 +5,7 @@ var jwt = require("jsonwebtoken");
 var expressJwt = require("express-jwt");
 const { body } = require("express-validator");
 const Token = require("../models/Token");
-const urll = "http://172.16.2.67:5000/api";
+const urll = "http://102.219.179.115/api";
 var aes256 = require('aes256');
 const resetToken = require("../models/resetToken");
 
@@ -83,7 +83,7 @@ exports.Token = async (req, res) => {
           message: "User not found.",
         });
       } else {
-        if (user.validPassword(req.body.password) && user.verified == true || Admin.verified == true) {
+        if (user.validPassword(req.body.password) && user.verified == true) {
           return res.json({
             token: jwt.sign(
               { email: user.email, firstName: user.firstName, _id: user._id },

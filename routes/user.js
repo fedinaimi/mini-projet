@@ -1,8 +1,7 @@
 const express = require("express")
 const userController=require("../controllers/user")
 const multer = require('../middlewares/multer-config')
-const { check } = require("express-validator");
-const { sign } = require("crypto");
+
 const auth = require("../middlewares/auth");
 const router = express.Router();
 const{
@@ -19,7 +18,7 @@ profile,
 
 router.post("/signup", userController.signup);
 router.post("/signin", userController.signin);
-router.get("/profile/:id",userController.profile);
+router.get("/profile/:id",auth,userController.profile);
 router.get("/signout", userController.signout);
 router.get("/user",userController.getUsers);
 router.get("/:id/verify/:token", Token);

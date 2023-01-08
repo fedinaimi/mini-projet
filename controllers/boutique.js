@@ -2,14 +2,14 @@ const boutique = require("../models/boutique");
 
 const ObjectId = require("mongodb").ObjectId;
 
-
+//add
 exports.addboutique = (req, res) => {
   let newboutique = new boutique({ ...req.body });
 
   newboutique.save((erro, newboutique) => {
     if (erro) {
       return res.status(400).json({
-        error: "unable to add product",
+        error: "unable to add boutique",
       });
     }
     return res.json({
@@ -19,6 +19,8 @@ exports.addboutique = (req, res) => {
   });
   console.log(newboutique);
 };
+
+//affichage
 exports.allboutique = async (req, res) => {
   try {
     const bou = await boutique.find()
@@ -28,10 +30,8 @@ exports.allboutique = async (req, res) => {
     res.status(500).json(error)
   }
 }
-
+//update
 exports.update = (req, res) => {
-
-
   console.log("haniji")
   console.log(req.body)
   console.log(req.params)
@@ -42,28 +42,19 @@ exports.update = (req, res) => {
    boutique
     .findByIdAndUpdate(
       { _id: req.params.id },
-      {$push:{
+      { ...req.body,
+        $push:{
+       
         produits:{...req.body,
           image:req.file.filename
         },
-        
-    
-
-      
-     
-
-      },
-      
-
-     
-
-    }
+        }, }
       //{ ...req.body, _id: req.params.id }
     )
     .then(() => res.status(200).json({ message: "boutique modifie" }))
     .catch((error) => res.status(400).json({ error }));
-};
-
+  };
+//get by id 
 
 exports.getOneBoutique = async (req, res) => {
  
@@ -74,3 +65,12 @@ exports.getOneBoutique = async (req, res) => {
     res.status(400).json(error)
    }
 };
+//delete
+exports.deleteboutique =  (req,res)=>{
+  boutique
+  .findByIdAndDelete({ _id: req.params.id })
+  .then(() => res.status(200).json({ message: "boutique supprimee "}))
+    .catch((error) => res.status(400).json({ error }));
+
+}
+ 
