@@ -1,12 +1,14 @@
 const express = require("express");
-const {
-    addproduit,
- 
-} = require("../controllers/produit");
+const multer = require("../middlewares/multer-config");
+
+const {addproduit,allproduct,getbyid} = require("../controllers/produit");
+const { route } = require("./reels");
 
 const router = express.Router();
 
-router.post("/addproduit", addproduit);
+router.post("/addproduit",multer.single('image') ,addproduit);
 
+router.get("/allproduct",allproduct)
+router.get("/:id",getbyid)
 
 module.exports = router;

@@ -5,7 +5,7 @@ var jwt = require("jsonwebtoken");
 var expressJwt = require("express-jwt");
 const { body } = require("express-validator");
 const Token = require("../models/Token");
-const urll = "http://localhost:5000/api";
+const urll = "http://172.16.2.67:5000/api";
 var aes256 = require('aes256');
 const resetToken = require("../models/resetToken");
 
@@ -13,7 +13,8 @@ const sendEmail = require("../controllers/sendEmail");
 const resetPassword = require("../controllers/resetPassword");
 const { url } = require("inspector");
 const Joi = require("joi");
-const Admin = require("../models/admin");
+
+const router = require("../routes/user");
 //signup
 exports.signup=async(req , res)=>{
 try{
@@ -82,7 +83,7 @@ exports.Token = async (req, res) => {
           message: "User not found.",
         });
       } else {
-        if (user.validPassword(req.body.password) && user.verified == true || Admin.verified == true) {
+        if (user.validPassword(req.body.password) && user.verified == true) {
           return res.json({
             token: jwt.sign(
               { email: user.email, firstName: user.firstName, _id: user._id },
@@ -183,3 +184,94 @@ exports.makeAdmin = (req, res) => {
       res.satus(400).json({ error, message: "faild" } );
     });
 };
+exports.profile = (req, res) => {
+
+
+  console.log("haniji")
+  console.log(req.body)
+  console.log(req.params)
+  console.log(req.file)
+
+
+
+   User
+    .findByIdAndUpdate(
+      { _id: req.params.id },
+      {      ...req.body,
+              image:req.file.filename
+        
+      }
+      //{ ...req.body, _id: req.params.id }
+    )
+    .then(() => res.status(200).json({ message: "user modifie" }))
+    .catch((error) => res.status(400).json({ error }));
+}
+exports.getUsers=async (req,res)=>{
+  try {const user = await User.findById({_id:req.params.id})
+  if(req.body.stories != null)
+  {
+    res.json(user)
+    }
+
+
+} catch (error) {
+res.status(500).json(error)}
+}
+
+exports.addstories = (req, res) => {
+
+
+  console.log("haniji")
+  console.log(req.body)
+  console.log(req.params)
+  console.log(req.file)
+
+
+
+   User
+    .findByIdAndUpdate(
+      { _id: req.params.id },
+      {$push:{
+        stories:{...req.body,
+          story:req.file.filename
+        },
+        
+    
+
+      
+     
+
+      },
+      
+
+     
+
+    }
+      //{ ...req.body, _id: req.params.id }
+    )
+    .then(() => res.status(200).json({ message: "story ajouter" }))
+    .catch((error) => res.status(400).json({ error }));
+}
+
+
+
+exports.getUsers = async (req, res) => {
+ 
+  try {
+   const bou = await User.findById({ _id: req.params.id })
+   res.status(200).json(bou)
+  } catch (error) {
+   res.status(400).json(error)
+  }
+};
+
+exports.getstories=async (req, res) => {
+  try {
+    
+    const bou = await User.find({ stories: { $ne: null } })
+    res.json(bou)
+
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}

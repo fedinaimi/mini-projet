@@ -6,7 +6,7 @@ const resetToken = new Schema({
   userId:{
   type:Schema.Types.ObjectId,
   require:true,
-  ref: "user",
+  ref: "User",
   unique: true,
 },
 token:{type:String , require : true},

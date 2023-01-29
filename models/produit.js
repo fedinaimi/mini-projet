@@ -1,43 +1,57 @@
+const { number } = require("joi");
 const mongoose = require("mongoose");
+const boutique = require("./boutique");
 
 const produitSchema = new mongoose.Schema({
- 
-  nom: {
-    type: String,
-    required: true,
-  },
-  prix:{
-type:mongoose.Types.Decimal128 ,
-required: true ,
-},
-
-reference:{
-
-    type: String,
-    required: true,
-  },
-  stock:{
-    type : Number,
-    required : true,
 
 
-  },
-  etat:{
-    type : String,
-    required : true,
-  },
-  description: {
-    type : String,
-    required : true,
-  },
+      produit: {
+              type:String,
+             required : false,
+            },
+            quantite: {
+              type: Number,
+             
+              required: false,
+            },
+            prix: {
+              type:Number ,
+              required: false ,
+            },
+            description: {
+              type:String,
+             required : false,
+            },
+            etat: {
+              type:String,
+             required : false,
+            },
+            image:{
+              type:String,
+              required : false,
 
-  categorie: {
-    
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Categorie",
-  },
- 
-  
-});
+            },
+            created_at: {
+              type: Date,
+              default: Date.now(),
+            },
+            category:{
+              type:String,
+              required : false,
+            },
+            client: {
+                type:mongoose.Schema.Types.ObjectId,
+                ref: "User",
+                required: true,
+              },
+           boutique: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "boutique",
+                required: true,
+              },
+
+          },
+      
+    );
 
 module.exports = mongoose.model("produit", produitSchema);

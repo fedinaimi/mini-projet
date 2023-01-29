@@ -1,23 +1,37 @@
 const panier = require("../models/panier");
 
-//--------------------------ajouter une categorie ---------------------------//
-exports.addpanier= (req, res) => {
-    
-    let newpanier = new panier({...req.body});
-    
-    // Initialize newUser object with request data
+const ObjectId = require("mongodb").ObjectId;
+const boutique = require("../models/boutique");
+let totale = 0;
 
-    
-    newpanier.save((err, newpanier) => {
-        if (err) {
-            
-          return res.status(400).json({
-            error: "unable to add product",
-          });
-        }
-        return res.json({
-          message: "sucsess",
-          newpanier,
-        });
+exports.addpanier = (req, res) => {
+  let newpanier = new panier({ ...req.body });
+
+  
+
+  newpanier.save((erro, newpanier) => {
+    if (erro) {
+      return res.status(400).json({
+        error: "unable to add product",
       });
-  };
+    }
+    return res.json({
+      message: "sucsess",
+      newpanier,
+    });
+  });
+  console.log(newpanier);
+};
+exports.getpanier= async (req, res) => {
+  
+ console.log(totale)
+  try {
+   const cart = await panier.find({ client: req.params.client },
+    
+  )
+
+   res.json(cart)
+  } catch (error) {
+   res.status(400).json(error)
+  }
+};

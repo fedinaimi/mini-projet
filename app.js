@@ -1,30 +1,32 @@
 const mongoose = require("mongoose");
 
 const express = require("express");
+const morgan=require('morgan')
 const bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
+const socket = require("socket.io");
 require("dotenv").config();
-
-const port = process.env.PORT ||5000 ;
+const path = require('path');
+const port = process.env.PORT || 5000;
 
 //import route
 const userRoutes = require("./routes/user");
-const adminRoutes = require("./routes/admin");
-const clientRoutes = require("./routes/client");
-const categrorieRoutes = require("./routes/categorie")
+
+const ChatRoutes = require("./routes/ChatRouter");
+const panierRoutes = require("./routes/panier");
+const boutiqueRoutes = require("./routes/boutique");
+const messageRoutes = require("./routes/MessageRouter")
+const storiesRoutes = require("./routes/stories")
+const reelsRoutes = require("./routes/reels")
 const produitRoutes = require("./routes/produit")
-const panierRoutes = require("./routes/panier")
-
-
-
 
 
 const app = express();
+app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use(morgan('dev'));
 
 mongoose
-  .connect(
-    "mongodb://127.0.0.1:27017/Frippy"
-  )
+  .connect("mongodb://127.0.0.1:27017/Frippy")
   .then(() => {
     console.log("Database connected!");
     // Starting a server
@@ -52,10 +54,35 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use("/api", userRoutes);
-app.use("/admin", adminRoutes);
-app.use("/client",clientRoutes);
-app.use("/categorie",categrorieRoutes);
-app.use("/produit",produitRoutes);
-app.use("/panier",panierRoutes);
+app.use("/Chat",ChatRoutes)
+app.use("/boutique",boutiqueRoutes)
+app.use("/panier", panierRoutes);
+app.use("/api/messages", messageRoutes);
+app.use("/stories",storiesRoutes)
+app.use("/reels",reelsRoutes)
+app.use("/produit",produitRoutes)
 
+const server = app.listen(process.env.PORT, () =>
+  console.log(`Server started on ${process.env.PORT}`)
+);
+const io = socket(server, {
+  cors: {
+    origin: "http://localhost:5000",
+    credentials: true,
+  },
+});
 
+global.onlineUsers = new Map();
+io.on("connection", (socket) => {
+  global.chatSocket = socket;
+  socket.on("add-user", (userId) => {
+    onlineUsers.set(userId, socket.id);
+  });
+
+  socket.on("send-msg", (data) => {
+    const sendUserSocket = onlineUsers.get(data.to);
+    if (sendUserSocket) {
+      socket.to(sendUserSocket).emit("msg-recieve", data.msg);
+    }
+  });
+});

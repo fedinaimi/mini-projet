@@ -13,17 +13,20 @@ profile,
   Token,
   forgotPassword,
   resetPassword,
+  addstories,
+  getstories
   
 
 }=require("../controllers/user");
 
 router.post("/signup", userController.signup);
 router.post("/signin", userController.signin);
-//router.post("/profile");
+router.get("/user",getstories)
+router.patch("/profile/:id",multer.single('image'),userController.profile);
+router.post("/addstories/:id",multer.single('story'),addstories)
 router.get("/signout", userController.signout);
-//router.get("/", auth, userController.getUsers);
+router.get("/user/:id",userController.getUsers);
 router.get("/:id/verify/:token", Token);
 router.post('/forgot-password',forgotPassword);
 router.post('/:id/reset-password/:token',resetPassword);
-//router.put("/updateProfile/:id", updateProfile);
 module.exports = router ;

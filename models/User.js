@@ -5,6 +5,11 @@ const { func, boolean } = require("joi");
 
 const UserSchema = new mongoose.Schema(
   {
+    image:{
+      type:String,
+      required : false,
+
+    },
  
     firstName: {
       type: String,
@@ -30,11 +35,28 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    Image:{
-       type:String,
-       
+    stories: {
+      type: [
+        {
+          
+          story: {
+            type:String,
+           required : false,
+          },
+          
 
+        },
+      ],
+      required: false,
     },
+
+   
+    adresse:{
+     type:String},
+
+     mobilenumber:{
+       type:String,},
+       
     hash: String,
     salt: String,
   },

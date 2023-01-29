@@ -1,40 +1,40 @@
-const { number } = require("joi");
+const { number, required } = require("joi");
 const mongoose = require("mongoose");
-const produit = require("./produit");
 
 const panierSchema = new mongoose.Schema({
- 
-  numeroPanier: {
-    type: String,
+ Prduit:{
+  type: String,
     required: true,
-  },
- produit:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref:"produit",
  },
- quantite:{
-    type: Number,
-    required : true, 
 
- },
- totale:{
-    type: mongoose.Types.Decimal128,
-    default : 0,
-    required : true ,
- },
- client: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "client",
+  nom: {
+    type: String,
     required: false,
   },
+  image: {
+    type: String,
+    required: false,
+  },
+  prix: {
+    type:String ,
+    
+    required: false,
+  },
+  quantiteProduit: {
+    type:Number ,
+    
+    required: false,
+  },
+  client: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+    required: true,
+  },
 
-
-  
+  Totale : {
+    type : String,
+    required : false 
+  }
 });
-
-
-
-    
-    
 
 module.exports = mongoose.model("panier", panierSchema);
