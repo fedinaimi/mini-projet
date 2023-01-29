@@ -67,7 +67,7 @@ const server = app.listen(process.env.PORT, () =>
 );
 const io = socket(server, {
   cors: {
-    origin: "http://localhost:5000",
+    origin: "mongodb+srv://ashraf:ashraf123@cluster0.lius4xw.mongodb.net/?retryWrites=true&w=majority",
     credentials: true,
   },
 });
